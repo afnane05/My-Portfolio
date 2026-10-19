@@ -1,0 +1,331 @@
+/* Gallery for the "logiciels" section.
+   Works on dark or light sites: borders and tints derive from currentColor.
+   Set --pg-accent on #projects (or :root) to match your theme. */
+
+#projects {
+  --pg-accent: var(--accent, #8ab4ff);
+  --pg-ink: #0d0f14;
+  --pg-bar: #171b24;
+  --pg-bar-text: #aab3c5;
+  --pg-line: color-mix(in srgb, currentColor 16%, transparent);
+  --pg-tint: color-mix(in srgb, currentColor 5%, transparent);
+}
+
+.pg-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4.5rem;
+  margin-top: 2rem;
+}
+
+/* ---------- frame ---------- */
+
+.pg-frame {
+  border: 1px solid var(--pg-line);
+  border-radius: 18px;
+  padding: clamp(1rem, 3vw, 1.75rem);
+  background: var(--pg-tint);
+}
+
+.pg-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+.pg-head-text { flex: 1; min-width: 0; }
+.pg-head h3 {
+  margin: 0 0 0.4rem;
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+.pg-head p {
+  max-width: 68ch;
+  margin: 0 0 0.75rem;
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+/* logo (left of the header) */
+.pg-logo {
+  width: 128px;
+  height: 128px;
+  flex: 0 0 auto;
+  object-fit: contain;
+  border-radius: 20px;
+  border: 1px solid var(--pg-line);
+  background: var(--pg-tint);
+  padding: 12px;
+}
+
+.pg-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.pg-chips li {
+  font-size: 0.78rem;
+  padding: 0.2rem 0.65rem;
+  border: 1px solid var(--pg-line);
+  border-radius: 999px;
+  opacity: 0.9;
+}
+
+/* ---------- section tabs ---------- */
+
+.pg-tabs {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: none;
+}
+.pg-tabs::-webkit-scrollbar { display: none; }
+.pg-tabs button {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.95rem;
+  font: inherit;
+  font-size: 0.9rem;
+  color: inherit;
+  background: transparent;
+  border: 1px solid var(--pg-line);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.pg-tabs button span {
+  font-size: 0.72rem;
+  opacity: 0.6;
+}
+.pg-tabs button:hover { border-color: var(--pg-accent); }
+.pg-tabs button.is-active {
+  background: var(--pg-accent);
+  border-color: var(--pg-accent);
+  color: var(--pg-ink);
+  font-weight: 600;
+}
+.pg-tabs button.is-active span { opacity: 0.7; }
+
+/* ---------- window ---------- */
+
+.pg-window {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--pg-line);
+  box-shadow: 0 24px 60px -28px rgba(0, 0, 0, 0.55);
+}
+
+.pg-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  height: 38px;
+  padding: 0 0.9rem;
+  background: var(--pg-bar);
+  color: var(--pg-bar-text);
+  font-size: 0.8rem;
+}
+.pg-lights { display: inline-flex; gap: 6px; }
+.pg-lights i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #3a4151;
+}
+.pg-bar-title {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pg-count { font-variant-numeric: tabular-nums; }
+
+.pg-stage {
+  position: relative;
+  overflow: hidden;
+  background: var(--pg-ink);
+  aspect-ratio: 16 / 9;
+  outline-offset: -3px;
+}
+.pg-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.55s cubic-bezier(0.22, 0.7, 0.2, 1);
+}
+.pg-slide {
+  flex: 0 0 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pg-slide img,
+.pg-slide video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.pg-zoom {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+
+/* arrows */
+.pg-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: rgba(13, 15, 20, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+.pg-arrow:hover,
+.pg-arrow:focus-visible {
+  background: var(--pg-accent);
+  border-color: var(--pg-accent);
+  color: var(--pg-ink);
+}
+.pg-arrow--prev { left: 14px; }
+.pg-arrow--next { right: 14px; }
+
+/* dots */
+.pg-dots {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 7px;
+  padding: 6px 10px;
+  background: rgba(13, 15, 20, 0.55);
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+}
+.pg-dots button {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+  transition: width 0.3s, background 0.3s;
+}
+.pg-dots button.is-active {
+  width: 22px;
+  background: var(--pg-accent);
+}
+
+/* auto-play progress */
+.pg-progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 100%;
+  background: var(--pg-accent);
+  transform-origin: left;
+  transform: scaleX(0);
+  animation-name: pg-progress;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+@keyframes pg-progress {
+  to { transform: scaleX(1); }
+}
+
+/* ---------- caption ---------- */
+
+.pg-caption {
+  padding: 1rem 1.1rem 1.15rem;
+  border-top: 1px solid var(--pg-line);
+  background: var(--pg-tint);
+}
+.pg-caption h4 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+.pg-caption p {
+  margin: 0.5rem 0 0;
+  max-width: 70ch;
+  line-height: 1.6;
+  opacity: 0.85;
+}
+.pg-caption .pg-chips { margin-top: 0.7rem; }
+
+/* ---------- lightbox ---------- */
+
+.pg-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  padding: clamp(0.75rem, 4vw, 3rem);
+  background: rgba(6, 8, 12, 0.92);
+  cursor: zoom-out;
+}
+.pg-lightbox img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+.pg-lightbox button {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  color: #fff;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.12);
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* ---------- a11y + responsive ---------- */
+
+.pg-stage:focus-visible,
+.pg-tabs button:focus-visible,
+.pg-dots button:focus-visible {
+  outline: 2px solid var(--pg-accent);
+}
+
+@media (max-width: 640px) {
+  .pg-head { flex-direction: column; gap: 0.75rem; }
+  .pg-logo { width: 96px; height: 96px; }
+  .pg-arrow { width: 36px; height: 36px; }
+  .pg-arrow--prev { left: 8px; }
+  .pg-arrow--next { right: 8px; }
+  .pg-stage { aspect-ratio: 4 / 3; }
+  .pg-list { gap: 3rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pg-track { transition: none; }
+}

@@ -1,0 +1,262 @@
+#experience {
+  padding: 80px 0;
+  margin: auto;
+  max-width: 1000px;
+}
+
+.joblist-job-title {
+  font-family: "NTR", sans-serif;
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--lightest-slate);
+}
+
+.joblist-job-company {
+  font-family: "NTR", sans-serif;
+  font-size: 28px;
+  color: var(--green-bright);
+  font-weight: bold;
+}
+
+.joblist-duration {
+  font-family: "NTR", sans-serif;
+  font-size: 18px;
+  color: var(--slate);
+}
+
+#vertical-tabpanel {
+  margin-top: -28px;
+  padding-left: 25px;
+}
+
+.MuiTab-wrapper {
+  font-size: 16px;
+  text-align: left;
+  align-items: flex-start !important;
+  font-family: "NTR", sans-serif;
+}
+
+.MuiButtonBase-root {
+  outline: none !important;
+  color: var(--lightest-slate) !important;
+}
+
+.PrivateTabIndicator-colorSecondary-5 {
+  background-color: var(--green-bright) !important;
+}
+.jss5 {
+  background-color: var(--green-bright) !important;
+}
+.makeStyles-tabs-2 {
+  border-right: 1px solid var(--lightest-navy) !important;
+}
+#experience .MuiTab-root {
+  padding: 6px 20px;
+}
+.MuiButtonBase-root:focus {
+  color: var(--green-bright) !important;
+}
+
+ul {
+  list-style: none;
+  margin-left: -40px;
+}
+
+.job-description li::before {
+  content: "▹    ";
+  color: var(--green-bright);
+  position: absolute;
+  left: 0;
+}
+
+.job-description li {
+  position: relative;
+  padding-left: 30px;
+  padding-bottom: 16px;
+  font-size: 18px;
+  color: var(--slate);
+}
+
+.job-description {
+  padding-top: 24px;
+  max-width: 650px;
+  font-family: "NTR", sans-serif;
+  font-size: 20px;
+}
+
+.job-description a,
+.job-description b {
+  font-size: 19px;
+  font-weight: bold;
+}
+
+/* Certificate on the left, description on the right */
+.job-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.job-content .job-description {
+  flex: 1;
+  min-width: 0;
+}
+
+.job-certificate {
+  flex: 0 0 300px;
+  max-width: 300px;
+  margin-top: 24px;
+}
+
+.job-certificate-btn {
+  display: block;
+  width: 100%;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: zoom-in;
+  text-align: center;
+}
+
+.job-certificate-btn img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--lightest-navy);
+  border-radius: 4px;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.job-certificate-btn:hover img {
+  transform: scale(1.03);
+  border-color: var(--green-bright);
+}
+
+/* Full-screen certificate viewer */
+.certificate-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(2, 12, 27, 0.92);
+  cursor: zoom-out;
+}
+
+.certificate-lightbox img {
+  width: min(94vw, 1600px);
+  height: 90vh;
+  object-fit: contain;
+  cursor: default;
+  border-radius: 4px;
+}
+
+.certificate-lightbox-close {
+  position: absolute;
+  top: 16px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  font-size: 24px;
+  line-height: 1;
+  color: var(--lightest-slate, #fff);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--lightest-navy, #fff);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.certificate-lightbox-close:hover {
+  color: var(--green-bright);
+  border-color: var(--green-bright);
+}
+
+.job-certificate-hint {
+  display: block;
+  margin-top: 8px;
+  font-family: "NTR", sans-serif;
+  font-size: 14px;
+  color: var(--slate);
+}
+
+.job-certificate-btn:hover .job-certificate-hint {
+  color: var(--green-bright);
+}
+
+/* Timeline */
+.experience-timeline {
+  list-style: none;
+  margin: 32px 0 48px;
+  padding: 0 0 0 20px;
+  border-left: 2px solid var(--lightest-navy);
+}
+
+.timeline-item {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 16px;
+  padding: 0 0 22px 20px;
+  font-family: "NTR", sans-serif;
+}
+
+.timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -31px;
+  top: 8px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--green-bright);
+  box-shadow: 0 0 0 4px var(--navy, transparent);
+}
+
+.timeline-company {
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--lightest-slate);
+}
+
+.timeline-dates {
+  font-size: 18px;
+  color: var(--slate);
+}
+
+@media only screen and (max-width: 800px) {
+  #experience {
+    padding: 60px 0;
+    padding-left: unset;
+    padding-right: unset;
+  }
+
+  .makeStyles-root-1 {
+    height: unset !important;
+    width: unset;
+    flex-direction: column;
+  }
+
+  .joblist-job-title {
+    font-size: 22px;
+  }
+
+  .joblist-job-company {
+    font-size: 22px;
+  }
+
+  .job-content {
+    flex-direction: column;
+  }
+
+  .job-certificate {
+    flex: none;
+    max-width: 100%;
+    margin-top: 16px;
+  }
+}
