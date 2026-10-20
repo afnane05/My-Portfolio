@@ -13,7 +13,7 @@ const AUTO_DELAY = 4500;
 
 // All media live at the root of /public. If you move them into a folder
 // (e.g. /public/media), change this to: (file) => `/media/${file}`
-const src = (file) => `/${file}`;
+const src = (file) => `${import.meta.env.BASE_URL}${file}`;
 
 // Helpers: img(file, title, description, stack) / vid(file, title, description, stack)
 // -> fill in `description` and `stack` yourself. Stack is comma-separated: "React, Tailwind"
