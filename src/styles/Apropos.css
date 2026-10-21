@@ -18,17 +18,12 @@
 }
 
 .Apropos-description li {
-  position: relative;
-  padding-left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 8px;
   font-size: 18px;
   color: var(--slate);
-}
-
-.Apropos-description li::before {
-  content: "▹    ";
-  color: var(--green-bright);
-  position: absolute;
-  left: 0;
 }
 
 .Apropos-content {
