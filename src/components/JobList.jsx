@@ -1,7 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Tabs, Tab, Typography, Box, useTheme, useMediaQuery } from "@mui/material";
+import { createPortal } from "react-dom";
 import FadeInSection from "./FadeInSection";
+
+// Files in /public, safe under a GitHub Pages sub-path (base)
+const asset = (file) => `${import.meta.env.BASE_URL}${file}`;
 
 function TabPanel(props) {
   const { children, value, index, isMobile, ...other } = props;
@@ -68,7 +72,7 @@ const JobList = () => {
         "Formation pratique couvrant le cycle de vie d'une application .NET, le caching et les Background Jobs",
         "Mise en place de la supervision et de l'observabilité avec Prometheus et Grafana",
       ],
-      certificate: "/StageCodePlus.png",
+      certificate: "StageCodePlus.png",
     },
     Technologica: {
       jobTitle: "Stagiaire Ingénieure Logiciel @",
@@ -95,7 +99,7 @@ const JobList = () => {
         "Conçu et développé une solution web full-stack avec React et ASP.NET Core dédiée à la gestion et à la dématérialisation des courriers électroniques",
         "Facilité l'accès et le suivi des documents administratifs pour les différents départements de la Direction Régionale de la Santé",
       ],
-      certificate: "/StageGI3.png",
+      certificate: "StageGI3.png",
     },
 
 
@@ -169,6 +173,27 @@ const JobList = () => {
               {experienceItems[key]["duration"]}
             </div>
             <div className="job-content">
+              {experienceItems[key]["certificate"] && (
+                <div className="job-certificate">
+                  <button
+                    type="button"
+                    className="job-certificate-btn"
+                    onClick={() =>
+                      setLightbox({
+                        src: asset(experienceItems[key]["certificate"]),
+                        alt: "Certificat " + key,
+                      })
+                    }
+                    aria-label={"Agrandir le certificat " + key}
+                  >
+                    <img
+                      src={asset(experienceItems[key]["certificate"])}
+                      alt={"Certificat " + key}
+                    />
+                    <span className="job-certificate-hint">Cliquer pour agrandir</span>
+                  </button>
+                </div>
+              )}
               <ul className="job-description">
                 {experienceItems[key]["desc"].map(function (descItem, i) {
                   return (
@@ -178,32 +203,12 @@ const JobList = () => {
                   );
                 })}
               </ul>
-              {experienceItems[key]["certificate"] && (
-                <div className="job-certificate">
-                  <button
-                    type="button"
-                    className="job-certificate-btn"
-                    onClick={() =>
-                      setLightbox({
-                        src: experienceItems[key]["certificate"],
-                        alt: "Certificat " + key,
-                      })
-                    }
-                    aria-label={"Agrandir le certificat " + key}
-                  >
-                    <img
-                      src={experienceItems[key]["certificate"]}
-                      alt={"Certificat " + key}
-                    />
-                    <span className="job-certificate-hint">Cliquer pour agrandir</span>
-                  </button>
-                </div>
-              )}
             </div>
           </TabPanel>
         ))}
       </Box>
-      {lightbox && (
+      {lightbox &&
+        createPortal(
         <div
           className="certificate-lightbox"
           onClick={() => setLightbox(null)}
@@ -224,7 +229,7 @@ const JobList = () => {
             onClick={(e) => e.stopPropagation()}
           />
         </div>
-      )}
+        , document.body)}
     </Box>
   );
 };
