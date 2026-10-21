@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Intro from "./components/Intro";
 import Experience from "./components/Experience";
 import Apropos from "./components/Apropos";
@@ -13,8 +13,6 @@ import "./styles/Global.css";
 
 function App() {
   const { pathname } = useLocation();
-  const [gameActive, setGameActive] = useState(false);
-  const [showGameInfo, setShowGameInfo] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -23,28 +21,6 @@ function App() {
   return (
     <div className="App">
       <NavBar />
-      <div className="game-toggle-fixed">
-
-        <div className="game-toggle-row">
-          <button
-            className={`game-toggle-btn${gameActive ? " game-toggle-btn--on" : ""}`}
-            onClick={() => setGameActive((a) => !a)}
-            title={gameActive ? "Disable game mode" : "Enable game mode"}
-          >
-            <span className="game-toggle-dot" />
-            game mode
-          </button>
-          {gameActive && (
-            <button
-              className="game-info-btn"
-              onMouseEnter={() => setShowGameInfo(true)}
-              onMouseLeave={() => setShowGameInfo(false)}
-            >
-              i
-            </button>
-          )}
-        </div>
-      </div>
       <div id="content">
         <Routes>
           <Route
