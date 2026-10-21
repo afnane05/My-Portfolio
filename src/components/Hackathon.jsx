@@ -3,14 +3,17 @@ import "../styles/Projects.css";
 import "../styles/Hackathon.css";
 import FadeInSection from "./FadeInSection";
 
+// Works under a GitHub Pages sub-path (base) as well as at the root
+const asset = (path) => `${import.meta.env.BASE_URL}${path}`;
+
 const hackathon = {
   title: "MIATHON 2026 · 1ère place",
   desc: "Création d'un appareil électronique de détection du diabète, des maladies rénales et pulmonaires à partir d'analyses d'urine humaine, ainsi qu'une application mobile qui reçoit les résultats des tests depuis une carte ESP32 insérée dans l'appareil et aide l'utilisateur à suivre son état.",
   techStack: "ESP32, APPLICATION MOBILE, CAPTEURS",
   images: [
-    { src: "/assets/hackathon.jpg", alt: "Notre équipe au MIATHON 2026" },
-    { src: "/assets/hackathon1.jpg", alt: "Présentation du projet au MIATHON 2026" },
-    { src: "/assets/hackathon2.jpg", alt: "Remise du prix, 1ère place au MIATHON 2026" },
+    { src: asset("assets/hackathon.jpg"), alt: "Notre équipe au MIATHON 2026" },
+    { src: asset("assets/hackathon1.jpg"), alt: "Présentation du projet au MIATHON 2026" },
+    { src: asset("assets/hackathon2.jpg"), alt: "Remise du prix, 1ère place au MIATHON 2026" },
   ],
 };
 
