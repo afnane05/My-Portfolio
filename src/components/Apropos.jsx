@@ -46,7 +46,7 @@ const Apropos = () => {
             </ul>
           </div>
           <div className="Apropos-image">
-            <img alt="Afnane Lamriss" src={"/assets/me2.jpg"} />
+            <img alt="Afnane Lamriss" src={`${import.meta.env.BASE_URL}assets/me2.jpg`} />
           </div>
         </div>
       </FadeInSection>
