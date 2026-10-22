@@ -84,7 +84,7 @@ const NavBar = () => {
               <GitHubIcon style={{ fontSize: 19 }} />
             </Nav.Link>
             <Nav.Link
-              href="https://leetcode.com/u/afnane/"
+              href="https://leetcode.com/u/afnane05/"
               target="_blank"
               rel="noopener noreferrer"
             >
