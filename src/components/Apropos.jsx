@@ -5,6 +5,7 @@ import {
   SiLinux, SiGnubash, SiGit, SiPython, SiTypescript, SiReact, SiNextdotjs,
 } from "react-icons/si";
 import { DiDotnet } from "react-icons/di";
+import AsciiPortrait from "./AsciiPortrait"
 
 // Key = the exact text shown in the list below. No colour = follows the text colour.
 const TECH = {
@@ -68,9 +69,9 @@ const Apropos = () => {
               })}
             </ul>
           </div>
-          <div className="Apropos-image">
-            <img alt="Afnane Lamriss" src={`${import.meta.env.BASE_URL}assets/me2.jpg`} />
-          </div>
+        <div className="intro-simulation">
+          <AsciiPortrait />
+        </div>
         </div>
       </FadeInSection>
     </div>

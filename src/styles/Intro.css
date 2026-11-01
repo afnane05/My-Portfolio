@@ -7,7 +7,7 @@
   min-height: 80vh;
   padding: 0 5vw;
   box-sizing: border-box;
-  gap: 4vw;
+  gap: clamp(40px, 6vw, 96px);;
   padding-top: 100px;
 }
 

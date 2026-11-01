@@ -3,13 +3,15 @@ import "../styles/Intro.css";
 import { TypeAnimation } from "react-type-animation";
 import EmailRoundedIcon from "@mui/icons-material/EmailRounded";
 import FadeInSection from "./FadeInSection";
-import AsciiPortrait from "./AsciiPortrait"
+
+
 const Intro = () => {
   return (
     <div id="intro">
-      <div className="intro-simulation">
-        <AsciiPortrait />
+      <div className="Apropos-image">
+        <img alt="Afnane Lamriss" src={`${import.meta.env.BASE_URL}assets/me2.jpg`} />
       </div>
+
       <div className="intro-block">
         <div className="intro-title">
           {"Bonjour, c'est "}
