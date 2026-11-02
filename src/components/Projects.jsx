@@ -9,7 +9,7 @@ import ExternalLinks from "./ExternalLinks";
 /* ------------------------------------------------------------------ */
 
 // Delay between automatic slides (ms). Only used when a project has autoPlay: true.
-const AUTO_DELAY = 4500;
+const AUTO_DELAY = 2000;
 
 // All media live at the root of /public. If you move them into a folder
 // (e.g. /public/media), change this to: (file) => `/media/${file}`
@@ -36,7 +36,7 @@ const projects = [
     desc: "Plateforme de préparation aux entretiens en architecture microservices : matching CV-offres, simulation d'entretiens par IA avec interaction vocale, et génération de feedback détaillé.",
     techStack: "FastAPI, Gemini / Groq, Whisper, Edge TTS, PostgreSQL, Docker, Microservices, Git",
     link: "https://github.com/afnane05/Talk2Job",
-    autoPlay: false,
+    autoPlay: true,
     sections: [
       {
         name: "Démo",
@@ -76,7 +76,7 @@ const projects = [
     desc: "Backend e-commerce en Clean Architecture avec CQRS / MediatR, cache Redis, Materialized View pour la lecture, traitement asynchrone des commandes et supervision avec Prometheus, Grafana et Loki.",
     techStack: ".NET 8, Entity Framework Core, SQL Server, Redis, Prometheus, Grafana, Jaeger, Postman",
     link: "https://github.com/afnane05/OrderFlow_CodePLus",
-    autoPlay: false,
+    autoPlay: true,
     sections: [
       { name: "Grafana", items: [img("Grafana.png", "Grafana")] },
       { name: "Health check", items: [img("HealthCheck.png", "Health check")] },
@@ -94,7 +94,7 @@ const projects = [
     desc: "plateforme d’apprentissage entre pairs où chaque utilisateur peut à la fois enseigner et apprendre. Les utilisateurs gagnent des crédits en enseignant et les dépensent pour réserver des sessions. Projet backend réalisé en équipe avec ASP.NET Core Web API, EF Core et SQL Server, incluant l’authentification JWT, un portefeuille de crédits avec historique des transactions, un chat en temps réel via SignalR et une réservation transactionnelle qui empêche la double réservation de la dernière place. Un worker en arrière-plan clôture automatiquement les sessions terminées. API documentée avec Swagger.",
     techStack: "ASP.NET Core (.NET 8), Entity Framework Core, SQL Server, JWT authentication, SignalR, Background worker, Git",
     link: "", // ← paste the GitHub URL here (button hidden while empty)
-    autoPlay: false,
+    autoPlay: true,
     sections: [
       {
         name: "Layout",
@@ -143,10 +143,13 @@ const Chevron = ({ dir }) => (
 
 /* ------------------------------------------------------------------ */
 /*  SLIDER                                                             */
+/*  Receives ONE flat list of items for the whole project (every item  */
+/*  is tagged with its `section`), so swiping crosses section borders. */
 /* ------------------------------------------------------------------ */
 
-const Slider = ({ items, sectionName, autoPlay, onOpen }) => {
-  const [i, setI] = useState(0);
+const Slider = ({ items, index, onChange, autoPlay, onOpen }) => {
+  const i = index;
+  const setI = onChange; // state setter from Frame (functional updates work)
   const [paused, setPaused] = useState(false);
   const touchX = useRef(null);
   const trackRef = useRef(null);
@@ -154,13 +157,20 @@ const Slider = ({ items, sectionName, autoPlay, onOpen }) => {
   const multi = n > 1;
   const go = (d) => setI((c) => (c + d + n) % n);
 
+  const item = items[i];
+  const itemKey = (it) => `${it.section}-${it.file}`;
+
+  // Position inside the current section (for the "2 / 4" counter)
+  const sectionItems = items.filter((it) => it.section === item.section);
+  const localPos = sectionItems.indexOf(item) + 1;
+
   // Automatic sliding (restarts after every manual move, stops on hover/focus/video play)
   useEffect(() => {
     if (!autoPlay || !multi || paused) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const t = setTimeout(() => setI((c) => (c + 1) % n), AUTO_DELAY);
     return () => clearTimeout(t);
-  }, [autoPlay, multi, paused, i, n]);
+  }, [autoPlay, multi, paused, i, n, setI]);
 
   // Pause videos that are no longer on screen
   useEffect(() => {
@@ -182,18 +192,16 @@ const Slider = ({ items, sectionName, autoPlay, onOpen }) => {
     if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
   };
 
-  const item = items[i];
-
   return (
     <div className="pg-window">
       <div className="pg-bar">
         <span className="pg-lights" aria-hidden="true">
           <i /><i /><i />
         </span>
-        <span className="pg-bar-title">{sectionName}</span>
-        {multi && (
+        <span className="pg-bar-title">{item.section}</span>
+        {sectionItems.length > 1 && (
           <span className="pg-count" aria-live="polite">
-            {i + 1} / {n}
+            {localPos} / {sectionItems.length}
           </span>
         )}
       </div>
@@ -215,7 +223,7 @@ const Slider = ({ items, sectionName, autoPlay, onOpen }) => {
           style={{ transform: `translateX(-${i * 100}%)` }}
         >
           {items.map((it, idx) => (
-            <div className="pg-slide" key={it.file} aria-hidden={idx !== i}>
+            <div className="pg-slide" key={itemKey(it)} aria-hidden={idx !== i}>
               {it.type === "video" ? (
                 <video
                   src={src(it.file)}
@@ -261,7 +269,7 @@ const Slider = ({ items, sectionName, autoPlay, onOpen }) => {
               {items.map((it, idx) => (
                 <button
                   type="button"
-                  key={it.file}
+                  key={itemKey(it)}
                   className={idx === i ? "is-active" : ""}
                   onClick={() => setI(idx)}
                   aria-label={`Aller à : ${it.title}`}
@@ -281,7 +289,7 @@ const Slider = ({ items, sectionName, autoPlay, onOpen }) => {
       </div>
 
       {/* Caption of the current element: title always, description + stack when filled */}
-      <div className="pg-caption" key={item.file}>
+      <div className="pg-caption" key={itemKey(item)}>
         <h4>{item.title}</h4>
         {item.description && <p>{item.description}</p>}
         <Chips value={item.stack} />
@@ -295,8 +303,22 @@ const Slider = ({ items, sectionName, autoPlay, onOpen }) => {
 /* ------------------------------------------------------------------ */
 
 const Frame = ({ project, onOpen }) => {
-  const [s, setS] = useState(0);
-  const section = project.sections[s];
+  const [i, setI] = useState(0);
+
+  // One flat list of all items, each tagged with its section
+  const items = project.sections.flatMap((sec) =>
+    sec.items.map((it) => ({ ...it, section: sec.name }))
+  );
+
+  // Index of the first item of each section (used by the tabs)
+  let offset = 0;
+  const starts = project.sections.map((sec) => {
+    const start = offset;
+    offset += sec.items.length;
+    return start;
+  });
+
+  const currentSection = items[i].section;
 
   return (
     <article className="pg-frame">
@@ -319,9 +341,9 @@ const Frame = ({ project, onOpen }) => {
               type="button"
               role="tab"
               key={sec.name}
-              aria-selected={idx === s}
-              className={idx === s ? "is-active" : ""}
-              onClick={() => setS(idx)}
+              aria-selected={sec.name === currentSection}
+              className={sec.name === currentSection ? "is-active" : ""}
+              onClick={() => setI(starts[idx])}
             >
               {sec.name}
               <span>{sec.items.length}</span>
@@ -331,9 +353,9 @@ const Frame = ({ project, onOpen }) => {
       )}
 
       <Slider
-        key={`${project.id}-${s}`}
-        items={section.items}
-        sectionName={section.name}
+        items={items}
+        index={i}
+        onChange={setI}
         autoPlay={project.autoPlay}
         onOpen={onOpen}
       />
